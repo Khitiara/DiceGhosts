@@ -1,0 +1,19 @@
+﻿[
+  {
+    Rolls: [
+      3
+    ],
+    ContributedValue: 3
+  },
+  {
+    Rolls: [
+      -2,
+      5,
+      8,
+      7,
+      5,
+      4
+    ],
+    ContributedValue: 29
+  }
+]

@@ -1,12 +1,14 @@
-﻿using Spectre.Console;
+﻿using System.Text;
 
 namespace DiceGhosts;
 
 public abstract partial record DiceExpr
 {
-    public abstract void PrintRoot(Paragraph builder);
+    public abstract void PrintRoot(StringBuilder builder);
 
-    public virtual void Print(Paragraph builder)
+    public abstract int TotalValue { get; }
+
+    public virtual void Print(StringBuilder builder)
     {
         builder.Append("(");
         PrintRoot(builder);
@@ -15,12 +17,14 @@ public abstract partial record DiceExpr
 
     public record ConstExpr(int Value) : DiceExpr
     {
-        public override void PrintRoot(Paragraph builder)
+        public override void PrintRoot(StringBuilder builder)
         {
             builder.Append(Value.ToString());
         }
 
-        public override void Print(Paragraph builder)
+        public override int TotalValue => Value;
+
+        public override void Print(StringBuilder builder)
         {
             PrintRoot(builder);
         }
@@ -28,9 +32,9 @@ public abstract partial record DiceExpr
 
     public record RollExpr(DiceRoller.RollSegment[] Rolls) : DiceExpr
     {
-        public override void PrintRoot(Paragraph builder)
+        public override void PrintRoot(StringBuilder builder)
         {
-            builder.Append("[");
+            builder.Append("[[");
 
             foreach (DiceRoller.RollSegment roll in Rolls[..^1]) {
                 roll.Write(builder);
@@ -38,8 +42,10 @@ public abstract partial record DiceExpr
             }
 
             Rolls[^1].Write(builder);
-            builder.Append($"] {Rolls.Sum(r => r.ContributedValue)}");
+            builder.Append($"]] {Rolls.Sum(r => r.ContributedValue)}");
         }
+
+        public override int TotalValue => Rolls.Sum(r => r.ContributedValue);
     }
 
     public record BinaryExpr(BinaryExpr.Operators Operator, DiceExpr Left, DiceExpr Right) : DiceExpr
@@ -52,7 +58,7 @@ public abstract partial record DiceExpr
             Divide,
         }
 
-        public override void PrintRoot(Paragraph builder)
+        public override void PrintRoot(StringBuilder builder)
         {
             Left.Print(builder);
             builder.Append(" ");
@@ -66,5 +72,13 @@ public abstract partial record DiceExpr
             builder.Append(" ");
             Right.Print(builder);
         }
+
+        public override int TotalValue => Operator switch {
+            Operators.Add => Left.TotalValue + Right.TotalValue,
+            Operators.Subtract => Left.TotalValue - Right.TotalValue,
+            Operators.Multiply => Left.TotalValue * Right.TotalValue,
+            Operators.Divide => Left.TotalValue / Right.TotalValue,
+            _ => throw new ArgumentOutOfRangeException()
+        };
     }
 }

@@ -1,4 +1,4 @@
-﻿using Spectre.Console;
+﻿using System.Text;
 
 namespace DiceGhosts;
 
@@ -7,16 +7,16 @@ public static class DiceRoller
     public abstract record RollSegment
     {
         public abstract int ContributedValue { get; }
-        public abstract void Write(Paragraph writer);
+        public abstract void Write(StringBuilder writer);
     }
 
     public record NormalRoll(int Roll) : RollSegment
     {
         public override int ContributedValue => Roll;
 
-        public override void Write(Paragraph writer)
+        public override void Write(StringBuilder writer)
         {
-            writer.Append(Roll.ToString());
+            writer.Append(Roll);
         }
     }
 
@@ -24,9 +24,9 @@ public static class DiceRoller
     {
         public override int ContributedValue => 0;
 
-        public override void Write(Paragraph writer)
+        public override void Write(StringBuilder writer)
         {
-            writer.Append(Roll.ToString(), new Style(decoration: Decoration.Strikethrough));
+            writer.Append($"[strikethrough]{Roll.ToString()}[/strikethrough]");
         }
     }
 
@@ -34,13 +34,13 @@ public static class DiceRoller
     {
         public override int ContributedValue => Rolls.Where(i => i > 0).Sum();
 
-        public override void Write(Paragraph writer)
+        public override void Write(StringBuilder writer)
         {
             foreach (int i in Rolls[..^1]) {
                 if (i < 0) {
-                    writer.Append((-i).ToString(), new Style(decoration: Decoration.Strikethrough));
+                    writer.Append($"[strikethrough]{-i}[/strikethrough]");
                 } else {
-                    writer.Append($"{i.ToString()}!", new Style(decoration: Decoration.Bold));
+                    writer.Append($"[bold]{i}![/bold]");
                 }
 
                 writer.Append(" ");
@@ -53,7 +53,7 @@ public static class DiceRoller
     private static int[] RollChain(Random random, int sides, int roll, int rerollMax, int explodeMin, int rerolls,
         int explodes)
     {
-        List<int> rolls = new(Math.Max(0, rerolls) + Math.Max(0, explodes)) { roll };
+        List<int> rolls = new(Math.Abs(rerolls) + Math.Abs(explodes)) { roll };
         while (true) {
             if (rerolls != 0 && roll <= rerollMax) {
                 rolls[^1] = -rolls[^1]; // mark to discard
