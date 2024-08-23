@@ -53,7 +53,7 @@ public static class DiceRoller
     private static int[] RollChain(Random random, int sides, int roll, int rerollMax, int explodeMin, int rerolls,
         int explodes)
     {
-        List<int> rolls = new(rerolls + explodes) { roll };
+        List<int> rolls = new(Math.Max(0, rerolls) + Math.Max(0, explodes)) { roll };
         while (true) {
             if (rerolls != 0 && roll <= rerollMax) {
                 rolls[^1] = -rolls[^1]; // mark to discard

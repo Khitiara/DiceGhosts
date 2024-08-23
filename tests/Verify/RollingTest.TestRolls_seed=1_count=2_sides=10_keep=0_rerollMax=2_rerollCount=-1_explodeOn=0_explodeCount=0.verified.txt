@@ -1,0 +1,15 @@
+﻿[
+  {
+    Rolls: [
+      3
+    ],
+    ContributedValue: 3
+  },
+  {
+    Rolls: [
+      -2,
+      5
+    ],
+    ContributedValue: 5
+  }
+]

@@ -1,0 +1,51 @@
+﻿[
+  {
+    Rolls: [
+      5
+    ],
+    ContributedValue: 5
+  },
+  {
+    Rolls: [
+      5
+    ],
+    ContributedValue: 5
+  },
+  {
+    Rolls: [
+      5
+    ],
+    ContributedValue: 5
+  },
+  {
+    Rolls: [
+      4
+    ],
+    ContributedValue: 4
+  },
+  {
+    Rolls: [
+      2
+    ],
+    ContributedValue: 2
+  },
+  {
+    Rolls: [
+      4
+    ],
+    ContributedValue: 4
+  },
+  {
+    Rolls: [
+      6,
+      6
+    ],
+    ContributedValue: 12
+  },
+  {
+    Rolls: [
+      3
+    ],
+    ContributedValue: 3
+  }
+]
