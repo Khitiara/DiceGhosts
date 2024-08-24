@@ -1,0 +1,7 @@
+﻿{
+  Count: 2,
+  Sides: 20,
+  Inner: {
+    Keep: 1
+  }
+}

@@ -9,6 +9,11 @@
 
     <ItemGroup>
       <PackageReference Include="Spectre.Console" Version="0.49.2-preview.0.16" />
+      <PackageReference Include="Sprache" Version="3.0.0-develop-00049" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <InternalsVisibleTo Include="tests"/>
     </ItemGroup>
 
     <PropertyGroup>

@@ -52,15 +52,35 @@ public abstract partial record DiceExpr
     {
         public override void PrintRoot(StringBuilder builder)
         {
-            foreach (DiceExpr roll in Addends[..^1]) {
-                roll.PrintRoot(builder);
-                builder.Append(" + ");
+            Addends[0].PrintRoot(builder);
+            foreach (DiceExpr roll in Addends.AsSpan(1)) {
+                if (roll is NegatedExpr neg) {
+                    builder.Append(" - ");
+                    neg.Child.PrintRoot(builder);
+                } else {
+                    builder.Append(" + ");
+                    roll.PrintRoot(builder);
+                }
             }
-
-            Addends[^1].PrintRoot(builder);
         }
 
         public override int TotalValue => Addends.Sum(e => e.TotalValue);
+    }
+
+    public record NegatedExpr(DiceExpr Child) : DiceExpr
+    {
+        public override void PrintRoot(StringBuilder builder)
+        {
+            builder.Append("-");
+            Child.Print(builder);
+        }
+
+        public override void Print(StringBuilder builder)
+        {
+            PrintRoot(builder);
+        }
+
+        public override int TotalValue => -Child.TotalValue;
     }
 
     public record BinaryExpr(BinaryExpr.Operators Operator, DiceExpr Left, DiceExpr Right) : DiceExpr

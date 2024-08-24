@@ -1,0 +1,57 @@
+﻿{
+  Rolls: [
+    {
+      Rolls: [
+        2
+      ],
+      ContributedValue: 2
+    },
+    {
+      Rolls: [
+        -1,
+        -1,
+        4
+      ],
+      ContributedValue: 4
+    },
+    {
+      Rolls: [
+        3
+      ],
+      ContributedValue: 3
+    },
+    {
+      Rolls: [
+        5
+      ],
+      ContributedValue: 5
+    },
+    {
+      Rolls: [
+        4
+      ],
+      ContributedValue: 4
+    },
+    {
+      Rolls: [
+        3
+      ],
+      ContributedValue: 3
+    },
+    {
+      Rolls: [
+        3
+      ],
+      ContributedValue: 3
+    },
+    {
+      Rolls: [
+        6,
+        -1,
+        2
+      ],
+      ContributedValue: 8
+    }
+  ],
+  TotalValue: 32
+}

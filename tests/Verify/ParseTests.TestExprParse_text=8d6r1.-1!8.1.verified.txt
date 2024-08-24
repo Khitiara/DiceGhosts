@@ -1,0 +1,14 @@
+﻿{
+  Count: 8,
+  Sides: 6,
+  Inner: {
+    Reroll: {
+      Item1: 1,
+      Item2: -1
+    },
+    Explode: {
+      Item1: 8,
+      Item2: 1
+    }
+  }
+}
