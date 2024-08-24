@@ -26,7 +26,7 @@ public static class DiceRoller
 
         public override void Write(StringBuilder writer)
         {
-            writer.Append($"[strikethrough]{Roll.ToString()}[/strikethrough]");
+            writer.Append($"[strikethrough]{Roll.ToString()}[/]");
         }
     }
 
@@ -38,9 +38,9 @@ public static class DiceRoller
         {
             foreach (int i in Rolls[..^1]) {
                 if (i < 0) {
-                    writer.Append($"[strikethrough]{-i}[/strikethrough]");
+                    writer.Append($"[strikethrough]{-i}[/]");
                 } else {
-                    writer.Append($"[bold]{i}![/bold]");
+                    writer.Append($"[bold]{i}![/]");
                 }
 
                 writer.Append(" ");

@@ -1,1 +1,1 @@
-﻿[strikethrough]1[/strikethrough] [bold]8![/bold] [strikethrough]2[/strikethrough] [bold]8![/bold] 5
+﻿[strikethrough]1[/] [bold]8![/] [strikethrough]2[/] [bold]8![/] 5
