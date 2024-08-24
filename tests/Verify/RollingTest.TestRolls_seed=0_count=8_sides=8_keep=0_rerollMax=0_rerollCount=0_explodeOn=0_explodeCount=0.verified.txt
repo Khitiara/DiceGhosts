@@ -1,0 +1,34 @@
+﻿[
+  {
+    Roll: 3,
+    ContributedValue: 3
+  },
+  {
+    Roll: 5,
+    ContributedValue: 5
+  },
+  {
+    Roll: 7,
+    ContributedValue: 7
+  },
+  {
+    Roll: 8,
+    ContributedValue: 8
+  },
+  {
+    Roll: 6,
+    ContributedValue: 6
+  },
+  {
+    Roll: 6,
+    ContributedValue: 6
+  },
+  {
+    Roll: 5,
+    ContributedValue: 5
+  },
+  {
+    Roll: 1,
+    ContributedValue: 1
+  }
+]

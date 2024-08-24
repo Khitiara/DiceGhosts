@@ -48,6 +48,21 @@ public abstract partial record DiceExpr
         public override int TotalValue => Rolls.Sum(r => r.ContributedValue);
     }
 
+    public record SumExpr(params DiceExpr[] Addends) : DiceExpr
+    {
+        public override void PrintRoot(StringBuilder builder)
+        {
+            foreach (DiceExpr roll in Addends[..^1]) {
+                roll.PrintRoot(builder);
+                builder.Append(" + ");
+            }
+
+            Addends[^1].PrintRoot(builder);
+        }
+
+        public override int TotalValue => Addends.Sum(e => e.TotalValue);
+    }
+
     public record BinaryExpr(BinaryExpr.Operators Operator, DiceExpr Left, DiceExpr Right) : DiceExpr
     {
         public enum Operators

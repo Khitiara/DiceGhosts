@@ -1,0 +1,9 @@
+﻿[
+  {
+    Roll: 6,
+    ContributedValue: 6
+  },
+  {
+    Roll: 14
+  }
+]
