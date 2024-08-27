@@ -31,7 +31,8 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          cache: 'true'
+          global-json-file: global.json
+#          cache: 'true'
       - name: Restore
         run: dotnet restore --locked-mode
       - name: Build
