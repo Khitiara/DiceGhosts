@@ -1,5 +1,7 @@
 ﻿name: Publish
 on: push
+permissions:
+  contents: write
 jobs:
   build:
     name: Build
