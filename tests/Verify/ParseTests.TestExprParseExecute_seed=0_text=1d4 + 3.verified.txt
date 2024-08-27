@@ -1,9 +1,0 @@
-﻿{
-  Rolls: [
-    {
-      Roll: 3,
-      ContributedValue: 3
-    }
-  ],
-  TotalValue: 3
-}

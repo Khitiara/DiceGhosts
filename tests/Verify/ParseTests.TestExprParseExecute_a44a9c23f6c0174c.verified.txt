@@ -1,0 +1,17 @@
+﻿{
+  Operator: Add,
+  Left: {
+    Rolls: [
+      {
+        Roll: 3,
+        ContributedValue: 3
+      }
+    ],
+    TotalValue: 3
+  },
+  Right: {
+    Value: 3,
+    TotalValue: 3
+  },
+  TotalValue: 6
+}

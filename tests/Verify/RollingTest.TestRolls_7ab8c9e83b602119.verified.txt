@@ -4,6 +4,7 @@
     ContributedValue: 6
   },
   {
-    Roll: 14
+    Roll: 14,
+    ContributedValue: 0
   }
 ]

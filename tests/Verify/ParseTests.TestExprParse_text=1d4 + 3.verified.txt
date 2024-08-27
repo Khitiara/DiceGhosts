@@ -1,5 +1,0 @@
-﻿{
-  Count: 1,
-  Sides: 4,
-  Inner: {}
-}

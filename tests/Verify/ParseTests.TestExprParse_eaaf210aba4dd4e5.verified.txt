@@ -1,0 +1,28 @@
+﻿{
+  Op: Add,
+  Left: {
+    Count: 2,
+    Sides: 10,
+    Inner: {
+      Reroll: null,
+      Explode: null
+    }
+  },
+  Right: {
+    Op: Multiply,
+    Left: {
+      Count: 8,
+      Sides: 6,
+      Inner: {
+        Reroll: null,
+        Explode: {
+          Item1: 6,
+          Item2: -1
+        }
+      }
+    },
+    Right: {
+      Value: 3
+    }
+  }
+}

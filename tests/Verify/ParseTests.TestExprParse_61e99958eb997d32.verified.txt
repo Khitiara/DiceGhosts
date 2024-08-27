@@ -1,0 +1,14 @@
+﻿{
+  Op: Multiply,
+  Left: {
+    Count: 1,
+    Sides: 4,
+    Inner: {
+      Reroll: null,
+      Explode: null
+    }
+  },
+  Right: {
+    Value: 3
+  }
+}

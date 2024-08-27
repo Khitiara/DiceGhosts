@@ -1,7 +1,8 @@
 ﻿{
   Rolls: [
     {
-      Roll: 15
+      Roll: 15,
+      ContributedValue: 0
     },
     {
       Roll: 17,

@@ -6,13 +6,13 @@ public abstract partial record DiceExpr
 {
     internal static class Parser
     {
-        static Parser<BinaryExpr.Operators> Operator(string op, BinaryExpr.Operators opType) =>
+        private static Parser<BinaryExpr.Operators> Operator(string op, BinaryExpr.Operators opType) =>
             Parse.String(op).Token().Return(opType);
 
         private static readonly Parser<BinaryExpr.Operators> Add = Operator("+", BinaryExpr.Operators.Add);
-        private static readonly Parser<BinaryExpr.Operators> Sub = Operator("+", BinaryExpr.Operators.Subtract);
-        private static readonly Parser<BinaryExpr.Operators> Mul = Operator("+", BinaryExpr.Operators.Multiply);
-        private static readonly Parser<BinaryExpr.Operators> Div = Operator("+", BinaryExpr.Operators.Divide);
+        private static readonly Parser<BinaryExpr.Operators> Sub = Operator("-", BinaryExpr.Operators.Subtract);
+        private static readonly Parser<BinaryExpr.Operators> Mul = Operator("*", BinaryExpr.Operators.Multiply);
+        private static readonly Parser<BinaryExpr.Operators> Div = Operator("/", BinaryExpr.Operators.Divide);
 
         private static readonly Parser<int> UInt = Parse.Digit.AtLeastOnce().Text().Select(int.Parse);
 
@@ -50,19 +50,22 @@ public abstract partial record DiceExpr
             from extras in KeepOrRerollExplode
             select new RollArgs(count, sides, extras);
 
-        private static readonly Parser<PreRollExpr> Operand = Parse.Ref(() => Expr)
-            .Contained(Parse.Char('('), Parse.Char(')'))
+        private static readonly Parser<PreRollExpr> Operand =
+            (from lparen in Parse.Char('(')
+                from expr in Parse.Ref(() => Expr)
+                from rparen in Parse.Char(')')
+                select expr)
             .XOr(Int.Select(PreRollExpr.MakeConst));
 
-        private static readonly Parser<PreRollExpr> Term = Roll.XOr(Operand);
+        private static readonly Parser<PreRollExpr> Term = Roll.Or(Operand).Token();
 
         private static readonly Parser<PreRollExpr> MulDiv =
-            Parse.ChainOperator(Mul.Or(Div), Term, PreRollExpr.MakeBinary);
+            Parse.XChainOperator(Mul.XOr(Div), Term.Token(), PreRollExpr.MakeBinary);
 
         private static readonly Parser<PreRollExpr> Expr =
-            Parse.ChainOperator(Add.Or(Sub), MulDiv, PreRollExpr.MakeBinary);
+            Parse.XChainOperator(Add.XOr(Sub), MulDiv.Token(), PreRollExpr.MakeBinary);
 
-        internal static PreRollExpr ParseExpr(string text) => Expr.Parse(text);
+        internal static PreRollExpr ParseExpr(string text) => Expr.End().Parse(text);
 
         internal abstract record PreRollExpr
         {

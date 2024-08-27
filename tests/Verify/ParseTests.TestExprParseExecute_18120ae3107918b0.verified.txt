@@ -1,0 +1,80 @@
+﻿{
+  Operator: Add,
+  Left: {
+    Rolls: [
+      {
+        Roll: 8,
+        ContributedValue: 8
+      },
+      {
+        Roll: 9,
+        ContributedValue: 9
+      }
+    ],
+    TotalValue: 17
+  },
+  Right: {
+    Operator: Multiply,
+    Left: {
+      Rolls: [
+        {
+          Rolls: [
+            5
+          ],
+          ContributedValue: 5
+        },
+        {
+          Rolls: [
+            4
+          ],
+          ContributedValue: 4
+        },
+        {
+          Rolls: [
+            2
+          ],
+          ContributedValue: 2
+        },
+        {
+          Rolls: [
+            4
+          ],
+          ContributedValue: 4
+        },
+        {
+          Rolls: [
+            6,
+            2
+          ],
+          ContributedValue: 8
+        },
+        {
+          Rolls: [
+            3
+          ],
+          ContributedValue: 3
+        },
+        {
+          Rolls: [
+            6,
+            3
+          ],
+          ContributedValue: 9
+        },
+        {
+          Rolls: [
+            2
+          ],
+          ContributedValue: 2
+        }
+      ],
+      TotalValue: 37
+    },
+    Right: {
+      Value: 3,
+      TotalValue: 3
+    },
+    TotalValue: 111
+  },
+  TotalValue: 128
+}
