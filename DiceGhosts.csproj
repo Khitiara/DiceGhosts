@@ -18,5 +18,6 @@
 
     <PropertyGroup>
         <DefaultItemExcludes>$(DefaultItemExcludes);tests\**</DefaultItemExcludes>
+        <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
     </PropertyGroup>
 </Project>

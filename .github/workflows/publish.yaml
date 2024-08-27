@@ -1,0 +1,79 @@
+﻿name: Publish
+on: push
+jobs:
+  build:
+    name: Build
+    strategy:
+      matrix:
+        kind: [ 'linux', 'windows', 'macOS' ]
+        include:
+          - kind: linux
+            os: ubuntu-latest
+            archive:
+              type: tar
+              ext: tar.gz
+          - kind: windows
+            os: windows-latest
+            archive:
+              type: zip
+              ext: zip
+          - kind: macOS
+            os: macos-latest
+            archive:
+              type: tar
+              ext: tar.gz
+    runs-on: ${{ matrix.os }}
+    env:
+      NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          cache: 'true'
+      - name: Restore
+        run: dotnet restore --locked-mode
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
+      - name: Publish
+        run: dotnet publish --no-restore DiceGhosts.csproj -c Release -o release --nologo
+      - name: Archive Release
+        id: archive
+        uses: thedoctor0/zip-release@0.7.5
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          type: ${{ matrix.archive.type }}
+          filename: DiceGhosts-${{ matrix.os }}.${{ matrix.archive.ext }}
+          path: 'release/'
+      - name: Upload Archive
+        uses: actions/upload-artifact@v4
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          name: archive-DiceGhosts-${{ matrix.os }}
+          path: DiceGhosts-${{ matrix.os }}.${{ matrix.archive.ext }}
+      - name: Upload Artifact
+        with:
+          name: DiceGhosts-${{ matrix.os }}
+          path: 'release/'
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: archives
+          pattern: archive-*
+          merge-multiple: 'true'
+      - uses: geekyeggo/delete-artifact@v5
+        with:
+          name: archive-*
+          failOnError: false
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: archives/*
